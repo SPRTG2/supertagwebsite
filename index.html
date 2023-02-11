@@ -6,11 +6,11 @@
     <title>SuperTag</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   </head>
-  <body>
+  <body onload="createCaptcha()">
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="https://bulma.io">
-      <img src="https://i.ibb.co/7XLYb0L/output-onlinepngtools.png" width="112" height="28">
+    <a class="navbar-item" href="">
+      <img src="https://i.ibb.co/7XLYb0L/output-onlinepngtools.png" width="99" height="40">
     </a>
 
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -26,8 +26,8 @@
         Home
       </a>
 
-      <a class="navbar-item">
-        Documentation
+      <a href="https://www.oculus.com/experiences/quest/5804748912952607/?ranking_trace=1055123081248119_5804748912952607_SKYLINEWEB_4ba40cc0-2032-46c1-a263-9dd8a6c24210&utm_source=www.meta.com&utm_medium=oculusredirect" class="navbar-item">
+        Get SuperTag
       </a>
 
       <div class="navbar-item has-dropdown is-hoverable">
@@ -36,39 +36,155 @@
         </a>
 
         <div class="navbar-dropdown">
-          <a class="navbar-item">
-            About
+          <a  data-target="modal-js-example" class="navbar-item js-modal-trigger">
+           Join Our Discord!
           </a>
-          <a class="navbar-item">
-            Jobs
-          </a>
-          <a class="navbar-item">
-            Contact
-          </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item">
+           <hr class="navbar-divider">
+		   <a class="navbar-item">
             Report an issue
           </a>
-        </div>
+		</div>
       </div>
     </div>
 
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-primary">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-light">
-            Log in
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+   
 </nav>
 
+
+<br>
+<br>
+
+<article style="width: 50%;" class="message is-warning">
+  <div class="message-header">
+    <p>URGENT</p>
+  </div>
+  <div class="message-body">
+    if you are joining our discord server, you are <em><b> FORBIDDEN</b></em> from spamming, hacking, or harrasing others.
+  </div>
+</article>
+
+
+    <div id="modal-js-example" class="modal">
+  <div class="modal-background"></div>
+
+  <div class="modal-content">
+    <div class="box">
+      <h1> Welcome! and thank you for choosing to play supertag! </h1>
+	  <hr>
+	  unfortunately, due to a high volume of people joining, you'll need to complete the captcha to join
+	  <!-- Your content -->
+<br>
+  <form onsubmit="validateCaptcha()">
+    <div id="captcha">
+    </div>
     
+	<div class="field">
+  <div class="control">
+    <input class="input" type="text" placeholder="Captcha" id="cpatchaTextBox">
+  </div>
+  <p class="help">This is <b> NOT </b> optional*</p>
+</div>
+	  <a><button type="submit" class="button is-info">Check Captcha And Join</button></a>
+  </form>
+
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<style>
+canvas{
+  /*prevent interaction with the canvas*/
+  pointer-events:none;
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Functions to open and close a modal
+  function openModal($el) {
+    $el.classList.add('is-active');
+  }
+
+  function closeModal($el) {
+    $el.classList.remove('is-active');
+  }
+
+  function closeAllModals() {
+    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+      closeModal($modal);
+    });
+  }
+
+  // Add a click event on buttons to open a specific modal
+  (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+    const modal = $trigger.dataset.target;
+    const $target = document.getElementById(modal);
+
+    $trigger.addEventListener('click', () => {
+      openModal($target);
+    });
+  });
+
+  // Add a click event on various child elements to close the parent modal
+  (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+    const $target = $close.closest('.modal');
+
+    $close.addEventListener('click', () => {
+      closeModal($target);
+    });
+  });
+
+  // Add a keyboard event to close all modals
+  document.addEventListener('keydown', (event) => {
+    const e = event || window.event;
+
+    if (e.keyCode === 27) { // Escape key
+      closeAllModals();
+    }
+  });
+});
+</script>
     
+	<script>
+	var code;
+function createCaptcha() {
+  //clear the contents of captcha div first 
+  document.getElementById('captcha').innerHTML = "";
+  var charsArray =
+  "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
+  var lengthOtp = 6;
+  var captcha = [];
+  for (var i = 0; i < lengthOtp; i++) {
+    //below code will not allow Repetition of Characters
+    var index = Math.floor(Math.random() * charsArray.length + 1); //get the next character from the array
+    if (captcha.indexOf(charsArray[index]) == -1)
+      captcha.push(charsArray[index]);
+    else i--;
+  }
+  var canv = document.createElement("canvas");
+  canv.id = "captcha";
+  canv.width = 100;
+  canv.height = 50;
+  var ctx = canv.getContext("2d");
+  ctx.font = "25px Georgia";
+  ctx.strokeText(captcha.join(""), 0, 30);
+  //storing captcha so that can validate you can save it somewhere else according to your specific requirements
+  code = captcha.join("");
+  document.getElementById("captcha").appendChild(canv); // adds the canvas to the body element
+}
+function validateCaptcha() {
+  event.preventDefault();
+  debugger
+  if (document.getElementById("cpatchaTextBox").value == code) {
+    alert("Valid Captcha")
+// Simulate an HTTP redirect:
+window.location.replace("https://discord.gg/supertag"); 
+ }else{
+    alert("Invalid Captcha. try Again");
+    createCaptcha();
+  }
+}
+</script>
+	
+	
+	
   </body>
+</html>
 </html>
