@@ -5,6 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SuperTag</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <script>
+  (function () {
+    var burger = document.querySelector('.burger');
+    var menu = document.querySelector('#' + burger.dataset.target);
+    burger.addEventListener('click', function () {
+        burger.classList.toggle('is-active');
+        menu.classList.toggle('is-active');
+    });
+})();
+</script>
+  <script>
+  function detectmob() {
+   if(window.innerWidth <= 800 || window.innerHeight <= 600) {
+     return true;
+   } else {
+     return false;
+   }
+}
+
+if (detectmob()){
+document.getElementById('phone').innerHTML = "<article  id="phone"  style="width: 50%;" class="message is-info">
+  <div class="message-header">
+    <p>mobile detected</p>
+  </div>
+  <div class="message-body">
+   Hello, it looks like you are using a phone to access our site, the top navigation bar is unavailable, so we added navigation at the bottom of the page, we apologize if this is an inconvenience
+  </div>
+</article>"
+}
+</script>
   </head>
   <body onload="createCaptcha()">
 <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -63,7 +93,7 @@
   </div>
 </article>
 
-
+<div id='phone'></div>
 
 <br>
 <br>
@@ -96,7 +126,7 @@
 <br>
 <br>
 <hr>
-<center><a href="https://pdfhost.io/v/fML0CbGFS_d2b0b7e830294c018e35ab212b3326ba7642ff971ae04a1aa8d19c6d59333ec5"><button class="button is-white">Our Privacy Policy</button></a></center>
+<center> <button  data-target="modal-js-example" class="button is-white js-modal-trigger">Join Our Discord</button><a href="https://pdfhost.io/v/fML0CbGFS_d2b0b7e830294c018e35ab212b3326ba7642ff971ae04a1aa8d19c6d59333ec5"><button class="button is-white">Our Privacy Policy</button></a></center>
 
     <div id="modal-js-example" class="modal">
   <div class="modal-background"></div>
@@ -218,6 +248,7 @@ window.location.replace("https://discord.gg/supertag");
 }
 </script>
 
+<script async type="text/javascript" src="./js/bulma.js"></script>
 
 	
   </body>
